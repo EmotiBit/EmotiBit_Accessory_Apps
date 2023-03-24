@@ -1,0 +1,6 @@
+EpochTimestamp,EmotiBitTimestamp,PacketNumber,DataLength,TypeTag,ProtocolVersion,DataReliability,UN
+1618271974.000000,1860786,3969,2,UN,1,100,Question 3
+1618272314.000000,2190321,62283,2,UN,1,100,jumping jacks
+1618272410.000000,2283760,13316,2,UN,1,100,macarena
+1618272437.000000,2310213,18030,2,UN,1,100,dad jokes
+1618272469.000000,2341187,23537,2,UN,1,100,baby sign language
