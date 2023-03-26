@@ -7,16 +7,18 @@ import processing.serial.*;
 import cc.arduino.*;
 
 // ------------ CHANGE PARAMETERS HERE --------------- //
-String oscAddress = "/EmotiBit/0/PPG:IR";
+// Look in EmotiBit Oscilloscope/data/oscOutputSettings.xml for EmotiBit OSC port and addresses
+String oscAddress = "/EmotiBit/0/PPG:IR"; 
 int oscPort = 12345;
-int arduinoPin = 11;
+
+int arduinoPin = 11; // Set the arduino output pin
 
 // Change these variables to change the filters
 float samplingFreq = 25; // change to match sampling frequency of the data
 boolean lowPass = true;
 float lpCut = 3;
 boolean highPass = true;
-float hpCut = 2;
+float hpCut = 1;
 
 // See additional info here: 
 // https://github.com/EmotiBit/EmotiBit_Docs/blob/master/Working_with_emotibit_data.md
@@ -148,7 +150,7 @@ float filter(float data) {
     //println("filter LP: " + data + ", " + lpFiltVal + ", " + lpAlpha);
     data = lpFiltVal;
   }
-  if (lowPass) {
+  if (highPass) {
     if (firstFilt) {
       hpFiltVal = data;
     } else {
