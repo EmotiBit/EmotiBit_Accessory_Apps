@@ -1,10 +1,10 @@
-// Reads EmotiBit data from a parsed data file
-// Plots data in a window and let's you do anything you want with the data!
+// Reads EmotiBit data from a parsed data file and plays back data over OSC
 
 import oscP5.*;
 import netP5.*;
 
-// ------------ CHANGE OSC + DATA PARAMETERS HERE --------------- //
+// ------------ CHANGE DATA + OSC PARAMETERS HERE --------------- //
+// Set oscAddress and oscPort to match settings in receiver
 String oscAddress = "/EmotiBit/0/PPG:IR";
 int oscPort = 12345;
 
