@@ -15,10 +15,10 @@ int arduinoPin = 11; // Set the arduino output pin
 
 // Change these variables to change the filters
 float samplingFreq = 25; // change to match sampling frequency of the data
-boolean lowPass = true;
-float lpCut = 3;
-boolean highPass = true;
-float hpCut = 1;
+boolean lowPass = true; // toggles on/off the low-pass filter
+float lpCut = 3; // adjusts the cut frequency of the low-pass filter
+boolean highPass = true; // toggles on/off the high-pass filter
+float hpCut = 1; // adjusts the cut frequency of the high-pass filter
 
 // See additional info here: 
 // https://github.com/EmotiBit/EmotiBit_Docs/blob/master/Working_with_emotibit_data.md
