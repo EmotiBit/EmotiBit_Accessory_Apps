@@ -1,12 +1,20 @@
-// Reads EmotiBit data from a parsed data file
-// Plots data in a window and let's you do anything you want with the data!
+// Reads EmotiBit data from an OSC stream
+// Plots data in a window and controls a DIO port on Arduino!
 
 import oscP5.*;
 import netP5.*;
 
-// ------------ CHANGE OSC PARAMETERS HERE --------------- //
-String oscAddress = "/EmotiBit/0/PPG:IR";
+// ------------ CHANGE PARAMETERS HERE --------------- //
+// Look in EmotiBit Oscilloscope/data/oscOutputSettings.xml for EmotiBit OSC port and addresses
+String oscAddress = "/EmotiBit/0/PPG:IR"; 
 int oscPort = 12345;
+
+// Change these variables to change the filters
+float samplingFreq = 25; // change to match sampling frequency of the data
+boolean lowPass = true;
+float lpCut = 3;
+boolean highPass = true;
+float hpCut = 1;
 
 // See additional info here: 
 // https://github.com/EmotiBit/EmotiBit_Docs/blob/master/Working_with_emotibit_data.md
@@ -15,6 +23,11 @@ int oscPort = 12345;
 
 OscP5 oscP5;
 FloatList dataList = new FloatList();
+
+// filter variables
+float lpFiltVal;
+float hpFiltVal;
+boolean firstFilt = true;
 
 // --------------------------------------------------- //
 void setup() {
@@ -79,8 +92,43 @@ void oscEvent(OscMessage theOscMessage) {
     for (int n = 0; n < args.length; n++)
     {
       float data = theOscMessage.get(n).floatValue();
+      
+      // Filter data to extract features
+      data = filter(data);
+      
       dataList.append(data); // store data for plotting and autoscaling
     }
   }
+}
+  
+// --------------------------------------------------- //
+// Function to do some basic filtering of the data
+// Change global filter variables at top of file
+float filter(float data) {
+
+  float DIGITAL_FILTER_PI = 3.1415926535897932384626433832795;
+  float DIGITAL_FILTER_E = 2.7182818284590452353602874713526;
+  float lpAlpha = pow(DIGITAL_FILTER_E, -2.f * DIGITAL_FILTER_PI * lpCut / samplingFreq);
+  float hpAlpha = pow(DIGITAL_FILTER_E, -2.f * DIGITAL_FILTER_PI * hpCut / samplingFreq);
+  if (lowPass) {
+    if (firstFilt) {
+      lpFiltVal = data;
+    } else {
+      lpFiltVal = data * (1. - lpAlpha) + lpFiltVal * lpAlpha;
+    }
+    //println("filter LP: " + data + ", " + lpFiltVal + ", " + lpAlpha);
+    data = lpFiltVal;
+  }
+  if (highPass) {
+    if (firstFilt) {
+      hpFiltVal = data;
+    } else {
+      hpFiltVal = data * (1. - hpAlpha) + hpFiltVal * hpAlpha;
+    }
+    //println("filter HP: " + data + ", " + hpFiltVal + ", " + hpAlpha);
+    data = data - hpFiltVal;
+  }
+  firstFilt = false;
+  return data;
 }
   
