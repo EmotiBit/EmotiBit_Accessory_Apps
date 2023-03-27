@@ -10,7 +10,7 @@ int oscPort = 12345;
 
 String dataType = "PI";
 float frequency = 25; //in Hz (samples per second)
-String dataFilename = "2021-04-12_16-53-27-967617_" + dataType + ".csv";
+String dataFilename = "data/2021-04-12_16-53-27-967617_" + dataType + ".csv";
 
 // See additional info here: 
 // https://github.com/EmotiBit/EmotiBit_Docs/blob/master/Working_with_emotibit_data.md
