@@ -1,6 +1,8 @@
 # Description
 Processing library to read EmotiBit data from an OSC stream and visualize the data on-screen and on a digital output of a connected Arduino.
 
+<img src="./assets/heartbeat_led.gif">
+
 # Dependencies
 - Hardware
   - Arduino compatible board programmed with `StandardFirmata` firmware (see [instructions here](https://www.instructables.com/Arduino-Installing-Standard-Firmata/))
