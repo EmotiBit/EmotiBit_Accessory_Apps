@@ -16,7 +16,7 @@ Processing library to read EmotiBit data from an OSC stream and visualize the da
 - Run `EmotiBit_Read_Data_Send_OSC_Example.pde`
 - Run `EmotiBit_OSC_Viz_Ard_Example.pde`
 - Optionally adjust the filter variables to change how the signal is processed
-- Do something new and/or weird! Hook up a solenoid to water your plants every time a heartbeat is detected. Or hook up a servo motor to feed your cat every time there's an EDA spike... biometrics without borders!
+- Do something new and/or weird! Hook up a solenoid to water your plants every time a heartbeat is detected. Or hook up a servo motor to feed your cat every time EDA spikes... biometrics without borders!
 
 # Working with live EmotiBit data
 - Stop `EmotiBit_Read_Data_Send_OSC_Example.pde`
