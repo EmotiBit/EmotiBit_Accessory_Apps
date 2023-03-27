@@ -5,8 +5,7 @@ Processing library to read EmotiBit data from an OSC stream and visualize the da
 - Hardware
   - Arduino compatible board programmed with `StandardFirmata` firmware (see [instructions here](https://www.instructables.com/Arduino-Installing-Standard-Firmata/))
   - LED (or other circuit element) connected between pin 11 and GND
-    - <img src="./assets/Arduino_LED_Hookup.png" width="400">Arduino_LED_Hookup.png
-    
+    - <img src="./assets/Arduino_LED_Hookup.png" width="400">
 - Processing libraries
   - `oscP5`  
   - `Arduino (Firmata)` ([screenshot](./assets/Arduino_firmata_lib_install.png))
