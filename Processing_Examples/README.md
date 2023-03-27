@@ -1,7 +1,7 @@
 # Description
-Processing examples for working with [EmotiBit](https://emotibit.com/) data.
+Processing examples for working with EmotiBit data.
 
 See also:
-- processing.org
-- emotibit.com
-- docs.emotibit.com
+- [processing.org](https://processing.org/)
+- [emotibit.com](https://emotibit.com/)
+- [docs.emotibit.com](http://docs.emotibit.com/)
