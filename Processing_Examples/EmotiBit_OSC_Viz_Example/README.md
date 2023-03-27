@@ -10,7 +10,7 @@ Processing library to read EmotiBit data from an OSC stream and visualize the da
 - Run `EmotiBit_Read_Data_Send_OSC_Example.pde`
 - Run `EmotiBit_OSC_Viz_Example.pde`
 - Optionally adjust the filter variables to change how the signal is processed
-- Change the code to turn biometrics into mind-blowing visuals or generative audio!
+- Change the code to turn biometrics into new forms of self-expression or digital drugs in the metaverse! Biometrics without borders!
 
 # Working with live EmotiBit data
 - Stop `EmotiBit_Read_Data_Send_OSC_Example.pde`
