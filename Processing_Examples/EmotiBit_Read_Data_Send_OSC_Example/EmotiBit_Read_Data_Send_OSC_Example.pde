@@ -4,18 +4,15 @@ import oscP5.*;
 import netP5.*;
 
 // ------------ CHANGE DATA + OSC PARAMETERS HERE --------------- //
+// Choose an EmotiBit data TypeTag and matching sampling rate. 
+// For a full list of data TypeTags, see: https://github.com/EmotiBit/EmotiBit_Docs/blob/master/Working_with_emotibit_data.md#emotibit-data-types
+String dataType = "PI";
+float frequency = 25; // sampling rate in Hz (samples per second)
+String dataFilename = "data/2021-04-12_16-53-27-967617_" + dataType + ".csv";
+
 // Set oscAddress and oscPort to match settings in receiver
 String oscAddress = "/EmotiBit/0/PPG:IR";
 int oscPort = 12345;
-
-String dataType = "PI";
-float frequency = 25; //in Hz (samples per second)
-String dataFilename = "data/2021-04-12_16-53-27-967617_" + dataType + ".csv";
-
-// See additional info here: 
-// https://github.com/EmotiBit/EmotiBit_Docs/blob/master/Working_with_emotibit_data.md
-// https://www.emotibit.com/
-// https://www.kickstarter.com/projects/emotibit/930776266?ref=5syezv&token=7176d37c 
 // --------------------------------------------------- //
 
 OscP5 oscP5;

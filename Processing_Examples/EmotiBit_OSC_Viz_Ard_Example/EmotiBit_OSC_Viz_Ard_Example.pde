@@ -27,6 +27,7 @@ float hpCut = 1; // adjusts the cut frequency of the high-pass filter
 
 OscP5 oscP5;
 Arduino arduino;
+boolean ardReady = false;
 FloatList dataList = new FloatList();
 
 // filter variables
@@ -41,16 +42,21 @@ void setup() {
   // Prints out the available serial ports.
   println(Arduino.list());
   
-  // Modify this line, by changing the "0" to the index of the serial
-  // port corresponding to your Arduino board (as it appears in the list
-  // printed by the line above).
-  arduino = new Arduino(this, Arduino.list()[0], 57600);
-  // Alternatively, use the name of the serial port corresponding to your
-  // Arduino (in double-quotes), as in the following line.
-  //arduino = new Arduino(this, "/dev/tty.usbmodem621", 57600);
-  
-  for (int i = 0; i <= 13; i++) {
-    arduino.pinMode(i, Arduino.OUTPUT);
+  if (Arduino.list().length > 0) {
+    // Modify this line, by changing the "0" to the index of the serial
+    // port corresponding to your Arduino board (as it appears in the list
+    // printed by the line above).
+    arduino = new Arduino(this, Arduino.list()[0], 57600);
+    // Alternatively, use the name of the serial port corresponding to your
+    // Arduino (in double-quotes), as in the following line.
+    //arduino = new Arduino(this, "/dev/tty.usbmodem621", 57600);
+    
+    for (int i = 0; i <= 13; i++) {
+      arduino.pinMode(i, Arduino.OUTPUT);
+    }
+    ardReady = true;
+  } else {
+    println("WARNING: Arduino not found");
   }
 
   /* start oscP5, listening for incoming messages at port 12345 */
@@ -72,10 +78,14 @@ void draw() {
     // Change an LED or servo PWM based on alpha
     //arduino.analogWrite(arduinoPin, alpha/4);
     // or create a threshold to turn on/off a digital output
-    if (alpha > 127) {
-      arduino.digitalWrite(arduinoPin, Arduino.HIGH);
+    if (ardReady) {
+      if (alpha > 127) {
+        arduino.digitalWrite(arduinoPin, Arduino.HIGH);
+      } else {
+        arduino.digitalWrite(arduinoPin, Arduino.LOW);
+      }
     } else {
-      arduino.digitalWrite(arduinoPin, Arduino.LOW);
+      println("WARNING: Arduino not ready/found");
     }
     
     drawData();

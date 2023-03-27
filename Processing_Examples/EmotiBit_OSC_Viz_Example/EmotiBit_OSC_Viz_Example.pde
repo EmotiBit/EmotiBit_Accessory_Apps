@@ -1,5 +1,4 @@
-// Reads EmotiBit data from an OSC stream
-// Plots data in a window and controls a DIO port on Arduino!
+// Reads EmotiBit data from an OSC stream and plots data in a window
 
 import oscP5.*;
 import netP5.*;
@@ -84,7 +83,6 @@ float autoscale(float data) {
 
 // --------------------------------------------------- //
 // Process incoming OSC message
-// See https://sojamo.de/libraries/oscp5/reference/index.html
 void oscEvent(OscMessage theOscMessage) {
   //println("### received an osc message. with address pattern "+theOscMessage.addrPattern());
   if (theOscMessage.checkAddrPattern(oscAddress)) {
