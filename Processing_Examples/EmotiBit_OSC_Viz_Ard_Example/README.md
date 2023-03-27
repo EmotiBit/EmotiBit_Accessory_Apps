@@ -8,7 +8,7 @@ Processing library to read EmotiBit data from an OSC stream and visualize the da
   - [ToDo: insert image of Arduino hookup]
 - Processing libraries
   - `oscP5`  
-  - `Arduino (Firmata)` ([how-to screenshot](../Assets/Arduino_firmata_lib_install.png))
+  - `Arduino (Firmata)` ([how-to screenshot](./Assets/Arduino_firmata_lib_install.png))
 
 # Instructions
 - Install / hookup dependencies
