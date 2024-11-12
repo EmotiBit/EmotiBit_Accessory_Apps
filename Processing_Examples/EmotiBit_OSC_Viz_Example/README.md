@@ -1,6 +1,8 @@
 # Description
 Processing library to read EmotiBit data from an OSC stream and visualize the data on-screen
 
+<img src="./assets/heartbeat_processing.gif">
+
 # Dependencies
 - Processing libraries
   - `oscP5`
