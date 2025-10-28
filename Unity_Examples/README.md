@@ -98,7 +98,7 @@ TextMesh Pro is required for displaying live sensor values as text inside Unity.
 - Unity will import the fonts and shaders needed.
 
 ### 5. Install the EmotiBit Plugin
-1. Download the EmotiBit Plugin package. ToDo: add a link to the release.
+1. Download the [EmotiBit Plugin package](https://github.com/EmotiBit/EmotiBit_Accessory_Apps/releases/tag/EmotiBitUnityPlugin).
 2. In Unity, go to:
    ```
    Project Window → Right-Click → Import Package → Custom Package
