@@ -1,3 +1,5 @@
+## ⚠️THIS IS UNDER DEVELOPMENT. WE DO NOT OFFICIALLY SUPPORT THIS EXAMPLE.⚠️
+
 # 🧠 EmotiBit Plugin for Unity
 
 ## Table of Contents
