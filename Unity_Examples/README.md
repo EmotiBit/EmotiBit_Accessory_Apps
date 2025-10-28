@@ -10,9 +10,6 @@
 - [Visualization](#visualization)
 - [UI Integration](#ui-integration)
 - [Example Flow](#example-flow)
-- [Extending the Plugin](#extending-the-plugin)
-- [Notes & Tips](#notes--tips)
-- [References](#references)
 
 ---
 
@@ -121,7 +118,9 @@ Manager initialized
 ```
 
 At this point, your EmotiBit is streaming data into Unity!
-<img src="./assets/RunTheDemoScene.png" alt="EmotiBit Logo" width="300" />
+
+<img src="./assets/RunTheDemoScene.png" alt="EmotiBit Logo" width="500" />
+
 ---
 
 ## Core Components
@@ -141,7 +140,7 @@ The central bridge between the EmotiBit hardware and Unity.
 - Maintains rolling buffers of parsed data with configurable max size.
 - Supports optional CSV logging and debug printouts.
 - Ensures safe cleanup of BrainFlow sessions when destroyed.
-<img src="./assets/EmotiBitDataManager.png" alt="EmotiBit Logo" width="300" />
+<img src="./assets/EmotiBitDataManager.png" alt="EmotiBit Logo" width="500" />
 
 ### EmotiBitDataBroadcast
 Event-driven broadcaster for a single channel (e.g., Accel X, Gyro Z, EDA).
@@ -151,7 +150,7 @@ Event-driven broadcaster for a single channel (e.g., Accel X, Gyro Z, EDA).
 - Exposes `currentValue` and `lastValue`.
 - Raises UnityEvents (`OnValueChangedUpward`, `OnValueChangedDownward`) with configurable thresholds.
 - Designed to plug directly into visualization (charts, TMP) or trigger gameplay/UI logic.
-<img src="./assets/EmotiBitDataBroadcast.png" alt="EmotiBit Logo" width="300" />
+<img src="./assets/EmotiBitDataBroadcast.png" alt="EmotiBit Logo" width="500" />
 
 ### HeartRateDataBroadcast
 Example derived broadcaster.
@@ -161,7 +160,7 @@ Example derived broadcaster.
 - Runs detrending, bandpass (0.7–4 Hz), and FFT via BrainFlow’s `DataFilter.get_heart_rate`.
 - Outputs a heart rate BPM estimate to its inherited `dataOutputBuffer`.
 - Validates inputs, clamps ranges, and surfaces error messages.
-<img src="./assets/HeartrateDataBroadcast.png" alt="EmotiBit Logo" width="300" />
+<img src="./assets/HeartrateDataBroadcast.png" alt="EmotiBit Logo" width="500" />
 
 ### EmotiBitBoard Descriptions & Data Classes
 - `EmotiBitBoardDefaultDescription`, `EmotiBitBoardAuxiliaryDescription`, `EmotiBitBoardAncillaryDescription`  
@@ -193,13 +192,13 @@ Example derived broadcaster.
 - Allocates chart texture and material at startup.
 - Calls `chart.Render1` each frame to display the broadcaster buffer.
 - Good for scalar signals (EDA, temperature, heart rate).
-<img src="./assets/OneSeriesLineRenderer.png" alt="EmotiBit Logo" width="300" />
+<img src="./assets/OneSeriesLineRenderer.png" alt="EmotiBit Logo" width="500" />
 
 ### ThreeSeriesLineRenderer
 - Binds three `EmotiBitDataBroadcasts` to a single `LineChart`.
 - Renders three synchronized buffers with independent line colors.
 - Ideal for 3-axis motion data (accel/gyro/magnetometer).
-<img src="./assets/ThreeSeriesLineRenderer.png" alt="EmotiBit Logo" width="300" />
+<img src="./assets/ThreeSeriesLineRenderer.png" alt="EmotiBit Logo" width="500" />
 
 
 ---
@@ -212,7 +211,7 @@ Example derived broadcaster.
 - Formats `currentValue` with appropriate precision (e.g., `00.0000`, `00.00`).
 - Updates the value field each `FixedUpdate`.
 - Lightweight way to display live sensor data in VR/AR or HUD overlays.
-<img src="./assets/EmotiBitDataToTMP.png" alt="EmotiBit Logo" width="300" />
+<img src="./assets/EmotiBitDataToTMP.png" alt="EmotiBit Logo" width="500" />
 
 ---
 
