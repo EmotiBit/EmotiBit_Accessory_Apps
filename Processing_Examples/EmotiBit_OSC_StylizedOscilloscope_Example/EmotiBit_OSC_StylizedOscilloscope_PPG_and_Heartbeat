@@ -1,0 +1,293 @@
+// Reads EmotiBit data from an OSC stream and plots data in a window
+import oscP5.*;
+import netP5.*;
+
+// ------------ CHANGE PARAMETERS HERE --------------- //
+// Look in EmotiBit Oscilloscope/data/oscOutputSettings.xml for EmotiBit OSC port and addresses
+String dataStream = "PPG:IR";
+String oscAddress = "/EmotiBit/0/" + dataStream;
+int oscPort = 12345;
+
+// Change maxPoints to change the time window of viewing data
+int maxPoints = 300;       
+
+// Display Variables
+// RGB Values for EmotiBit Green - Change these values to make the dynamic graph line appear a different color!
+int Line_R = 0,
+    Line_G = 204,
+    Line_B = 115;
+
+// Change these values to change the size of the grid lines and dynamic line
+int myLineWeight = 10;
+int myGridWeight = 1;
+
+// RGB Values for EmotiBit Black - Change these values to make the background appear a different color
+int Background_R = 0,
+    Background_G = 22,
+    Background_B = 30;
+
+// RGB Values for white - Change these values to make the grid lines appear a different color
+int Grid_R = 255,
+    Grid_G = 255,
+    Grid_B = 255;
+
+// Change this value in reference to computer display settings to make the Stylized Oscilloscope appear on a different screen
+int myScreen = 1;
+
+OscP5 oscP5;
+float[] dataPoints;
+
+String hrAddress = "/EmotiBit/0/HR"; // New address for Heart Rate
+
+// Heartbeat & Low-Pass Filter Logic
+float lpThreshold = 0;
+float alpha = 0.075f; 
+boolean isBeating = false;
+float heartScale = 1.0f;
+
+// Heart Rate Data
+int currentHR = 0;
+
+int Heart_R = 255,
+    Heart_G = 0,
+    Heart_B = 0;
+
+void setup() {
+  //Sends display to screen 2
+    fullScreen(myScreen); // Your default/target canvas size
+    frameRate(60);
+
+    oscP5 = new OscP5(this, oscPort);
+    dataPoints = new float[maxPoints];
+
+    for (int i = 0; i < maxPoints; i++) {
+        dataPoints[i] = 0;
+    }
+}
+
+void draw() {
+  // Sets background RGB
+  background(Background_R, Background_G, Background_B);
+  drawGrid();
+  
+  // Change alpha to alter how transparent the EmotiBit Logo appears
+  drawLogo(255, true);
+  drawGraph();
+  drawUI();
+  drawHeartbeatWidget();
+}
+
+void oscEvent(OscMessage theOscMessage) {
+  String addr = theOscMessage.addrPattern();
+  String types = theOscMessage.typetag();
+
+  // 1. Handle PPG stream for the graph and beat detection
+  if (addr.equals(oscAddress)) {
+    for (int i = 0; i < theOscMessage.arguments().length; i++) {
+      float receivedValue = 0;
+      if (i >= types.length()) break;
+      char currentType = types.charAt(i);
+
+      if (currentType == 'f') {
+        receivedValue = theOscMessage.get(i).floatValue();
+      } else if (currentType == 'i') {
+        receivedValue = theOscMessage.get(i).intValue();
+      } else {
+        continue;
+      }
+
+      if (receivedValue <= 0) continue;
+
+      if (lpThreshold == 0) {
+        lpThreshold = receivedValue; 
+      } else {
+        lpThreshold = alpha * receivedValue + (1 - alpha) * lpThreshold;
+      }
+
+      if (receivedValue > lpThreshold) {
+        isBeating = true;
+      } else {
+        isBeating = false;
+      }
+
+      for (int j = 0; j < maxPoints - 1; j++) {
+        dataPoints[j] = dataPoints[j + 1];
+      }
+      dataPoints[maxPoints - 1] = receivedValue;
+    }
+  } 
+  // 2. Handle HR stream for the numeric display
+  else if (addr.equals(hrAddress)) {
+    if (types.length() > 0) {
+      char type = types.charAt(0);
+      if (type == 'f') {
+        currentHR = (int) theOscMessage.get(0).floatValue();
+      } else if (type == 'i') {
+        currentHR = theOscMessage.get(0).intValue();
+      }
+    }
+  }
+}
+
+void drawGrid() {
+  stroke(Line_R, Line_G, Line_B, 50);
+  strokeWeight(1);
+  for (int i = 0; i <= 5; i++) {
+    float y = map(i, 0, 5, 200, height - 200);
+    line(60, y, width - 60, y);
+  }
+}
+
+float minLimit = 100;
+
+void drawGraph() {
+  float localMin = Float.MAX_VALUE;
+  float localMax = -Float.MAX_VALUE;
+  int activeSamples = 0;
+
+  for (int i = 0; i < maxPoints; i++) {
+    if (dataPoints[i] > 0) {
+      if (dataPoints[i] < localMin) localMin = dataPoints[i];
+      if (dataPoints[i] > localMax) localMax = dataPoints[i];
+      activeSamples++;
+    }
+  }
+
+  if (oscAddress.equals("/EmotiBit/0/EDA")) {
+    minLimit = 0.02;
+  }
+
+  if (activeSamples < 10 || (localMax - localMin) < minLimit) {
+    localMin = localMin - 0.5;
+    localMax = localMax + 0.5;
+  }
+
+  float padding = (localMax - localMin) * 0.1;
+  if (padding == 0) padding = 10;
+
+  float renderMin = localMin - padding;
+  float renderMax = localMax + padding;
+
+  noFill();
+  
+  //Change RGB Values to what you want!
+  stroke(Line_R, Line_G, Line_G);
+  
+  strokeWeight(10);
+  beginShape();
+  for (int i = 0; i < maxPoints; i++) {
+    if (dataPoints[i] > 0) {
+      float x = map(i, 0, maxPoints - 1, 60, width - 60);
+      float y = map(dataPoints[i], renderMin, renderMax, height - 40, 60);
+      curveVertex(x, y);
+    }
+  }
+  endShape();
+
+  fill(Line_R, Line_G, Line_G);
+  textSize(11);
+  textAlign(LEFT, CENTER);
+  text("Raw Baseline Window: " + (int)localMin + " - " + (int)localMax, 60, height - 20);
+}
+
+void drawUI() {
+  textSize(64);
+  fill(Line_R, Line_G, Line_G);
+  textAlign(LEFT, TOP);
+  text("EmotiBit Biometric Feed — " + dataStream, 60, 60);
+  
+  textSize(28);
+  textAlign(RIGHT, BOTTOM);
+  text("Note: User Data is not collected!", width - 60, height - 20);
+}
+
+void drawHeartbeatWidget() {
+  float circleDiameter = 150;
+  float centerX = width - (circleDiameter - 20);
+  float centerY = circleDiameter - 20;
+  
+
+  pushStyle();
+  fill(255, 255, 255);
+  noStroke();
+  ellipse(centerX, centerY, circleDiameter, circleDiameter);
+
+  float targetScale = isBeating ? 1.35f : 1.0f;
+  heartScale = lerp(heartScale, targetScale, 0.2f);
+
+  fill(Heart_R, Heart_G, Heart_B);
+  noStroke();
+  pushMatrix();
+  translate(centerX, centerY); 
+  scale(heartScale);
+  
+  // Draw heart
+  beginShape();
+  vertex(0, -15);
+  bezierVertex(-25, -45, -50, -5, 0, 35);
+  bezierVertex(50, -5, 25, -45, 0, -15);
+  endShape(CLOSE);
+  
+  // Draw HR Text
+  fill(255); 
+  textAlign(CENTER, CENTER);
+  textSize(22); 
+  String hrString = (currentHR > 0) ? String.valueOf(currentHR) : "--";
+  text(hrString, 0, -5);
+  
+  popMatrix();
+  popStyle();
+}
+
+//--------- EmotiBit Body Parameters -------//
+  //EmotiBit Body - // Change bodyWidth to scale the size of the EmotiBit Logo
+  float bodyWidth = 150;
+  float bodyHeight = (0.6) * bodyWidth;
+  float radius = 5;
+  
+  //EmotiBit Arms
+  float armWidth = bodyWidth/3;
+  float armHeight = bodyWidth/32;
+  float widthOffset = bodyWidth/2 + armHeight;
+  float heightOffset = bodyHeight/2 + armHeight;
+   
+  //EmotiBit Eyes  
+  float eyesOffset = armWidth/2;
+  float eyeDiameter = 0.33 * bodyHeight;
+
+
+void drawLogo(int alpha, boolean fill){
+  //Sets Body and Arms to EmotiBit Green    
+    if (fill){
+      fill(Background_R, Background_G, Background_B);
+    } else {
+      noFill();
+    }
+    stroke(Grid_R, Grid_G, Grid_B, alpha);
+    strokeWeight(1);
+    rectMode(CENTER);
+    
+    //Make Body
+    rect(width/2, height/2, bodyWidth, bodyHeight, radius);
+    
+    //Top and Bottom Bars
+    rect(width/2, height/2 + heightOffset, armWidth, armHeight, radius);
+    rect(width/2, height/2 - heightOffset, armWidth, armHeight, radius);
+    
+    //Left and Right Bars
+    rect(width/2 - widthOffset, height/2, armHeight, armWidth, radius);
+    rect(width/2 + widthOffset, height/2, armHeight, armWidth, radius);
+    
+    //Draw Eyes
+    if (fill){
+      fill(Background_R, Background_G, Background_B);
+    } else {
+      noFill();
+    }
+    stroke(Grid_R, Grid_G, Grid_B, alpha);
+    ellipseMode(CENTER);
+    //Left Eye
+    ellipse(width/2 - eyesOffset, height/2, eyeDiameter, eyeDiameter);
+    //Right Eye
+    ellipse(width/2 + eyesOffset, height/2, eyeDiameter, eyeDiameter);
+}
