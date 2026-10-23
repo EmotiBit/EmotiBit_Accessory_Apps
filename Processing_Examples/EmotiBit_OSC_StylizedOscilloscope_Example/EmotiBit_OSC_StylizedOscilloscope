@@ -18,6 +18,8 @@ int Line_R = 0,
     Line_G = 204,
     Line_B = 115;
 
+int myStrokeWeight = 10;
+
 // RGB Values for EmotiBit Black - Change these values to make the background appear a different color
 int Background_R = 0,
     Background_G = 22,
@@ -57,53 +59,6 @@ void draw() {
 void oscEvent(OscMessage theOscMessage) {
   String addr = theOscMessage.addrPattern();
   String types = theOscMessage.typetag();
-
-  // 1. Handle PPG stream for the graph and beat detection
-  if (addr.equals(oscAddress)) {
-    for (int i = 0; i < theOscMessage.arguments().length; i++) {
-      float receivedValue = 0;
-      if (i >= types.length()) break;
-      char currentType = types.charAt(i);
-
-      if (currentType == 'f') {
-        receivedValue = theOscMessage.get(i).floatValue();
-      } else if (currentType == 'i') {
-        receivedValue = theOscMessage.get(i).intValue();
-      } else {
-        continue;
-      }
-
-      if (receivedValue <= 0) continue;
-
-      if (lpThreshold == 0) {
-        lpThreshold = receivedValue; 
-      } else {
-        lpThreshold = alpha * receivedValue + (1 - alpha) * lpThreshold;
-      }
-
-      if (receivedValue > lpThreshold) {
-        isBeating = true;
-      } else {
-        isBeating = false;
-      }
-
-      for (int j = 0; j < maxPoints - 1; j++) {
-        dataPoints[j] = dataPoints[j + 1];
-      }
-      dataPoints[maxPoints - 1] = receivedValue;
-    }
-  } 
-  // 2. Handle HR stream for the numeric display
-  else if (addr.equals(hrAddress)) {
-    if (types.length() > 0) {
-      char type = types.charAt(0);
-      if (type == 'f') {
-        currentHR = (int) theOscMessage.get(0).floatValue();
-      } else if (type == 'i') {
-        currentHR = theOscMessage.get(0).intValue();
-      }
-    }
-  }
 }
 
 void drawGrid() {
@@ -130,10 +85,6 @@ void drawGraph() {
     }
   }
 
-  if (oscAddress.equals("/EmotiBit/0/EDA")) {
-    minLimit = 0.02;
-  }
-
   if (activeSamples < 10 || (localMax - localMin) < minLimit) {
     localMin = localMin - 0.5;
     localMax = localMax + 0.5;
@@ -147,10 +98,10 @@ void drawGraph() {
 
   noFill();
   
-  //Change RGB Values to what you want!
+  //Change RGB Values to what you want above!
   stroke(Line_R, Line_G, Line_B);
-  
-  strokeWeight(10);
+
+  strokeWeight(myStrokeWeight);
   beginShape();
   for (int i = 0; i < maxPoints; i++) {
     if (dataPoints[i] > 0) {
@@ -178,14 +129,11 @@ void drawUI() {
   text("Note: User Data is not collected!", width - 60, height - 20);
 }
 
-
-
-/******* EmotiBit Body Parameters *******/
+//--------- EmotiBit Body Parameters -------//
   //EmotiBit Body
   float bodyWidth = 150;
   float bodyHeight = (0.6) * bodyWidth;
   float radius = 5;
-  int HeartSize = 5;
   
   //EmotiBit Arms
   float armWidth = bodyWidth/3;
