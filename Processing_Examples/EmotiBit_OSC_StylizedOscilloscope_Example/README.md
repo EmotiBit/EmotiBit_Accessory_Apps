@@ -1,7 +1,7 @@
 # Stylized Oscilloscope
 Processing Script to read EmotiBit data from an OSC stream and visualize the data on-screen in a stylized and digital shifting window oscilloscope.
 
-<img src="./assets/heartbeat_processing.gif">
+<img src="./assets/Stylized EmotiBit Oscilloscope PPG_IR.gif">
 
 # Dependencies
 - Processing libraries
