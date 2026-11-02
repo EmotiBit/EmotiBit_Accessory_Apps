@@ -32,7 +32,7 @@ int Grid_R = 255,
     Grid_B = 255;
 
 // Change this value in reference to computer display settings to make the Stylized Oscilloscope appear on a different screen
-int myScreen = 1;
+int myScreen = 2;
 
 OscP5 oscP5;
 float[] dataPoints;
@@ -108,7 +108,7 @@ void oscEvent(OscMessage theOscMessage) {
 }
 
 void drawGrid() {
-  stroke(gridR, gridG, gridB, 50);
+  stroke(Grid_R, Grid_G, Grid_B, 50);
   strokeWeight(1);
   for (int i = 0; i <= 5; i++) {
     float y = map(i, 0, 5, 200, height - 200);
@@ -159,7 +159,7 @@ void drawGraph() {
   }
   endShape();
 
-  fill(EBG_R, EBG_G, EBG_B);
+  fill(Line_R, Line_G, Line_B);
   textSize(11);
   textAlign(LEFT, CENTER);
   text("Raw Baseline Window: " + nf(localMin, 0, 3) + " - " + nf(localMax, 0, 3) + " uS", 60, height - 20);

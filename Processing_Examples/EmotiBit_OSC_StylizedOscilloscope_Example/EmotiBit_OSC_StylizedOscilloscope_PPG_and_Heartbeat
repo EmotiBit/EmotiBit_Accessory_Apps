@@ -32,7 +32,7 @@ int Grid_R = 255,
     Grid_B = 255;
 
 // Change this value in reference to computer display settings to make the Stylized Oscilloscope appear on a different screen
-int myScreen = 1;
+int myScreen = 2;
 
 OscP5 oscP5;
 float[] dataPoints;
@@ -171,7 +171,7 @@ void drawGraph() {
   noFill();
   
   //Change RGB Values to what you want!
-  stroke(Line_R, Line_G, Line_G);
+  stroke(Line_R, Line_G, Line_B);
   
   strokeWeight(10);
   beginShape();
@@ -184,7 +184,7 @@ void drawGraph() {
   }
   endShape();
 
-  fill(Line_R, Line_G, Line_G);
+  fill(Line_R, Line_G, Line_B);
   textSize(11);
   textAlign(LEFT, CENTER);
   text("Raw Baseline Window: " + (int)localMin + " - " + (int)localMax, 60, height - 20);
@@ -192,7 +192,7 @@ void drawGraph() {
 
 void drawUI() {
   textSize(64);
-  fill(Line_R, Line_G, Line_G);
+  fill(Line_R, Line_G, Line_B);
   textAlign(LEFT, TOP);
   text("EmotiBit Biometric Feed — " + dataStream, 60, 60);
   

@@ -54,6 +54,7 @@ void draw() {
   drawGrid();
   drawLogo(255, true);
   drawGraph();
+  drawUI();
 }
 
 void oscEvent(OscMessage theOscMessage) {
