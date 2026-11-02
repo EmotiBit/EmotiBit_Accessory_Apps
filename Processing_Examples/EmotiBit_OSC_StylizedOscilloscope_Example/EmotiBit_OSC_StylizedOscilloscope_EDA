@@ -4,7 +4,7 @@ import netP5.*;
 
 // ------------ CHANGE PARAMETERS HERE --------------- //
 // Look in EmotiBit Oscilloscope/data/oscOutputSettings.xml for EmotiBit OSC port and addresses
-String dataStream = "PPG:IR";
+String dataStream = "EDA";
 String oscAddress = "/EmotiBit/0/" + dataStream;
 int oscPort = 12345;
 
