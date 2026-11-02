@@ -59,6 +59,28 @@ void draw() {
 void oscEvent(OscMessage theOscMessage) {
   String addr = theOscMessage.addrPattern();
   String types = theOscMessage.typetag();
+    if (addr.equals(oscAddress)) {
+    for (int i = 0; i < theOscMessage.arguments().length; i++) {
+      float receivedValue = 0;
+      if (i >= types.length()) break;
+      char currentType = types.charAt(i);
+
+      if (currentType == 'f') {
+        receivedValue = theOscMessage.get(i).floatValue();
+      } else if (currentType == 'i') {
+        receivedValue = theOscMessage.get(i).intValue();
+      } else {
+        continue;
+      }
+
+      if (receivedValue <= 0) continue;
+      
+      for (int j = 0; j < maxPoints - 1; j++) {
+        dataPoints[j] = dataPoints[j + 1];
+      }
+      dataPoints[maxPoints - 1] = receivedValue;
+    }
+  }
 }
 
 void drawGrid() {
