@@ -17,10 +17,6 @@ int Line_R = 0,
     Line_G = 204,
     Line_B = 115;
 
-// Change these values to change the size of the grid lines and dynamic line
-int myLineWeight = 10;
-int myGridWeight = 1;
-
 // RGB Values for EmotiBit Black - Change these values to make the background appear a different color
 int Background_R = 0,
     Background_G = 22,
@@ -31,8 +27,11 @@ int Grid_R = 255,
     Grid_G = 255,
     Grid_B = 255;
 
+// Change this value to change the size of the dynamic line
+int myLineWeight = 10;
+
 // Change this value in reference to computer display settings to make the Stylized Oscilloscope appear on a different screen
-int myScreen = 2;
+int myScreen = 1;
 
 OscP5 oscP5;
 float[] dataPoints;
@@ -53,7 +52,6 @@ int Heart_R = 255,
     Heart_B = 0;
 
 void setup() {
-  //Sends display to screen 2
     fullScreen(myScreen); // Your default/target canvas size
     frameRate(60);
 
@@ -69,8 +67,6 @@ void draw() {
   // Sets background RGB
   background(Background_R, Background_G, Background_B);
   drawGrid();
-  
-  // Change alpha to alter how transparent the EmotiBit Logo appears
   drawLogo(255, true);
   drawGraph();
   drawUI();
@@ -79,9 +75,9 @@ void draw() {
 
 void oscEvent(OscMessage theOscMessage) {
   String addr = theOscMessage.addrPattern();
-  String types = theOscMessage.typetag();
 
-  // 1. Handle PPG stream for the graph and beat detection
+  if (theOscMessage.checkAddrPattern(oscAddress) == true) {
+    String types = theOscMessage.typetag();
   if (addr.equals(oscAddress)) {
     for (int i = 0; i < theOscMessage.arguments().length; i++) {
       float receivedValue = 0;
@@ -116,17 +112,17 @@ void oscEvent(OscMessage theOscMessage) {
       dataPoints[maxPoints - 1] = receivedValue;
     }
   } 
-  // 2. Handle HR stream for the numeric display
   else if (addr.equals(hrAddress)) {
-    if (types.length() > 0) {
-      char type = types.charAt(0);
-      if (type == 'f') {
-        currentHR = (int) theOscMessage.get(0).floatValue();
-      } else if (type == 'i') {
-        currentHR = theOscMessage.get(0).intValue();
+        if (types.length() > 0) {
+          char type = types.charAt(0);
+          if (type == 'f') {
+            currentHR = (int) theOscMessage.get(0).floatValue();
+          } else if (type == 'i') {
+            currentHR = theOscMessage.get(0).intValue();
+          }
+        }
       }
     }
-  }
 }
 
 void drawGrid() {
@@ -153,10 +149,6 @@ void drawGraph() {
     }
   }
 
-  if (oscAddress.equals("/EmotiBit/0/EDA")) {
-    minLimit = 0.02;
-  }
-
   if (activeSamples < 10 || (localMax - localMin) < minLimit) {
     localMin = localMin - 0.5;
     localMax = localMax + 0.5;
@@ -170,10 +162,10 @@ void drawGraph() {
 
   noFill();
   
-  //Change RGB Values to what you want!
+  //Change RGB Values to what you want above!
   stroke(Line_R, Line_G, Line_B);
   
-  strokeWeight(10);
+  strokeWeight(myLineWeight);
   beginShape();
   for (int i = 0; i < maxPoints; i++) {
     if (dataPoints[i] > 0) {
@@ -257,7 +249,6 @@ void drawHeartbeatWidget() {
 
 
 void drawLogo(int alpha, boolean fill){
-  //Sets Body and Arms to EmotiBit Green    
     if (fill){
       fill(Background_R, Background_G, Background_B);
     } else {
