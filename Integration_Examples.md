@@ -23,9 +23,9 @@ Explore how researchers, developers, and creators combine EmotiBit with other ha
 - Where to find technical resources for exploring similar software integrations.
 
 **Resources:**
-- Original project repository: [Add link]
-- Integration guide: [Add link]
-- Creator credits: [Add names]
+- Original project repository: [Original EmoMirror GitHub repository](https://github.com/grenmango51/EmoMirror)
+- Integration guide: [EmotiBit Integration Guide](https://github.com/grenmango51/EmoMirror/blob/main/EmotiBit_Guide.md)
+- Creator credits: Thinh Bui, Thanh Hoai Anh Nguyen, and Vo Nhan
 
 ## Pneunocchio
 
@@ -41,9 +41,10 @@ Explore how researchers, developers, and creators combine EmotiBit with other ha
 - What practical limitations to consider when connecting EmotiBit to pneumatic hardware.
 
 **Resources:**
-- Original research paper: [Add link]
-- Technical documentation: [Add link]
-- Researcher credits: [Add names]
+- Original research paper: [Pneunocchio (UIST 2023)](https://doi.org/10.1145/3586182.3616651)
+- Detailed technical research: [Designing Pneumatic Wearables — PhD Thesis (2026)](https://exertiongameslab.org/wp-content/uploads/2026/06/designing_pneumatic_wearables_phd.pdf) — See Chapter 5 for Pneunocchio's design, implementation, and field study.
+- **Researcher credits:** Aryan Saini, Srihari Sridhar, Aarushi Raheja, Rakesh Patibanda, Nathalie Overdevest, Po-Yao (Cosmos) Wang, Elise van den Hoven, and Florian "Floyd" Mueller
+- **Research affiliations:** Exertion Games Lab (Monash University), University of Technology Sydney, and Eindhoven University of Technology
 
 ## Explore More
 
