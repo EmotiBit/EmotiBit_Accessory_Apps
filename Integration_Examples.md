@@ -2,6 +2,12 @@
 
 Explore how researchers, developers, and creators combine EmotiBit with other hardware and software to build interactive applications.
 
+> ⚠️ **Community-Developed Examples — Not Officially Supported**
+>
+> These projects were developed by third parties and are shared for inspiration and reference. EmotiBit has not independently verified all implementation details or compatibility and does not officially support these integrations.
+>
+> External code and resources may change over time, potentially affecting functionality. Users should review the original documentation and verify compatibility before attempting to reproduce or adapt these projects.
+
 ## Featured Integrations
 
 | Project | Technology | Application |
@@ -28,7 +34,7 @@ Explore how researchers, developers, and creators combine EmotiBit with other ha
 - [EmotiBlog: Frontier Interfaces Hackathon: Storytelling with Biosensing](https://www.emotibit.com/frontier-interfaces-hackathon-storytelling-with-biosensing/)
 
 **Credits:**
-- Thinh Bui, Thanh Hoai Anh Nguyen, and Vo Nhan
+Thinh Bui, Thanh Hoai Anh Nguyen, and Vo Nhan
   
 ## Pneunocchio
 
@@ -49,7 +55,7 @@ Explore how researchers, developers, and creators combine EmotiBit with other ha
 - [Pneunocchio Project Overview](https://aryan90.com/projects/3_project/)
 
 **Credits:**
-- Aryan Saini, Srihari Sridhar, Aarushi Raheja, Rakesh Patibanda, Nathalie Overdevest, Po-Yao (Cosmos) Wang, Elise van den Hoven, and Florian "Floyd" Mueller.
+Aryan Saini, Srihari Sridhar, Aarushi Raheja, Rakesh Patibanda, Nathalie Overdevest, Po-Yao (Cosmos) Wang, Elise van den Hoven, and Florian "Floyd" Mueller.
   
 ## Explore More
-Additional hardware and software integration examples may be added in the future.
+Additional hardware and software integration examples are forthcoming. If you have a project you would like to showcase as an example, please reach out to [info@emotibit.com](mailto:info@emotibit.com).
