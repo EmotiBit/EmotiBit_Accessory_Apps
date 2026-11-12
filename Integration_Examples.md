@@ -28,12 +28,12 @@ Explore how researchers, developers, and creators combine EmotiBit with other ha
 - How physiological signals can be transformed into interactive visual feedback.
 - Where to find technical resources for exploring similar software integrations.
 
-**Resources:**
+### Resources
 - [Original EmoMirror GitHub repository](https://github.com/grenmango51/EmoMirror)
 - [EmotiBit Integration Guide](https://github.com/grenmango51/EmoMirror/blob/main/EmotiBit_Guide.md)
 - [EmotiBlog: Frontier Interfaces Hackathon: Storytelling with Biosensing](https://www.emotibit.com/frontier-interfaces-hackathon-storytelling-with-biosensing/)
 
-**Credits:**
+### Credits
 Thinh Bui, Thanh Hoai Anh Nguyen, and Vo Nhan
   
 ## Pneunocchio
@@ -49,12 +49,12 @@ Thinh Bui, Thanh Hoai Anh Nguyen, and Vo Nhan
 - How physiological baselines and thresholds can be incorporated into interactive wearable systems.
 - What practical limitations to consider when connecting EmotiBit to pneumatic hardware.
 
-**Resources:**
+### Resources
 - [Pneunocchio — Original Research Paper (2023)](https://doi.org/10.1145/3586182.3616651)
 - [Designing Pneumatic Wearables — PhD Thesis (2026)](https://exertiongameslab.org/wp-content/uploads/2026/06/designing_pneumatic_wearables_phd.pdf)
 - [Pneunocchio Project Overview](https://aryan90.com/projects/3_project/)
 
-**Credits:**
+### Credits
 Aryan Saini, Srihari Sridhar, Aarushi Raheja, Rakesh Patibanda, Nathalie Overdevest, Po-Yao (Cosmos) Wang, Elise van den Hoven, and Florian "Floyd" Mueller.
   
 ## Explore More
